@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: jaffle_shop
+    description: A clone of a Postgres application database.
+    database: MARIN_DB
+    tables:
+      - name: customers
+        description: Raw customers data
+        columns:
+          - name: id
+            description: PK for customers
+            tests:
+              - unique
+              - not_null
+
+      - name: orders
+        description: Raw orders data
+        columns:
+          - name: id
+            description: PK for orders
+            tests:
+              - unique
+              - not_null
+        loaded_at_field: _etl_loaded_at
+        freshness:
+          warn_after: {count: 3, period: day}
+          error_after: {count: 7, period: day}
